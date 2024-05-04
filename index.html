@@ -28,11 +28,16 @@
         // Define the functions directly in the global scope
         function generateTextToImage() {
             const prompt = document.getElementById('textToImagePrompt').value;
-            axios.post('https://api.stability.ai/v2beta/stable-image/generate/core', {
+            axios.post('https://decoded-pilot-421603.uc.r.appspot.com/generateTextToImage', {
                 prompt: prompt
             }).then(response => {
-                document.getElementById('textToImageResult').src = URL.createObjectURL(new Blob([response.data]));
-                document.getElementById('textToImageResult').hidden = false;
+                if (response.data && response.data.image) {
+                    const imageSrc = `data:image/jpeg;base64,${response.data.image}`;
+                    document.getElementById('textToImageResult').src = imageSrc;
+                    document.getElementById('textToImageResult').hidden = false;
+                } else {
+                    console.error('Unexpected API response format:', response);
+                }
             }).catch(error => {
                 console.error('Error:', error);
                 alert('An error occurred while generating the image.');
@@ -46,13 +51,18 @@
             formData.append('image', file);
             formData.append('prompt', prompt);
 
-            axios.post('https://api.stability.ai/v2beta/stable-image/generate/core', formData, {
+            axios.post('https://decoded-pilot-421603.uc.r.appspot.com/generateImageToImage', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             }).then(response => {
-                document.getElementById('imageToImageResult').src = URL.createObjectURL(new Blob([response.data]));
-                document.getElementById('imageToImageResult').hidden = false;
+                if (response.data && response.data.image) {
+                    const imageSrc = `data:image/jpeg;base64,${response.data.image}`;
+                    document.getElementById('imageToImageResult').src = imageSrc;
+                    document.getElementById('imageToImageResult').hidden = false;
+                } else {
+                    console.error('Unexpected API response format:', response);
+                }
             }).catch(error => {
                 console.error('Error:', error);
                 alert('An error occurred while transforming the image.');
