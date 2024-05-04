@@ -44,26 +44,18 @@ app.post('/generateTextToImage', (req, res) => {
             res.send(response.data);
         })
         .catch(error => {
-            console.error('Error in text-to-image generation:', error.message);
             let errorMessage = 'An unexpected error occurred.';
             let errorStatus = 500;
 
             if (error.response) {
-                // The request was made and the server responded with a status code
-                // that falls out of the range of 2xx
-                console.error('Error data:', error.response.data);
+                // Log the error status for internal tracking
                 console.error('Error status:', error.response.status);
-                console.error('Error headers:', error.response.headers);
-                errorMessage = error.response.data.message || 'An error occurred while generating the image.';
+                errorMessage = 'An error occurred while generating the image.';
                 errorStatus = error.response.status;
             } else if (error.request) {
-                // The request was made but no response was received
-                console.error('Error request:', error.request);
                 errorMessage = 'No response received from the image generation service.';
             } else {
-                // Something happened in setting up the request that triggered an Error
-                console.error('Error message:', error.message);
-                errorMessage = error.message;
+                errorMessage = 'An error occurred in the request.';
             }
             res.status(errorStatus).send(errorMessage);
         });
@@ -108,22 +100,18 @@ app.post('/generateImageToImage', upload.single('image'), (req, res) => {
             res.send(response.data);
         })
         .catch(error => {
-            console.error('Error in image-to-image generation:', error.message);
             let errorMessage = 'An unexpected error occurred.';
             let errorStatus = 500;
 
             if (error.response) {
-                console.error('Error data:', error.response.data);
+                // Log the error status for internal tracking
                 console.error('Error status:', error.response.status);
-                console.error('Error headers:', error.response.headers);
-                errorMessage = error.response.data.message || 'An error occurred while transforming the image.';
+                errorMessage = 'An error occurred while transforming the image.';
                 errorStatus = error.response.status;
             } else if (error.request) {
-                console.error('Error request:', error.request);
                 errorMessage = 'No response received from the image transformation service.';
             } else {
-                console.error('Error message:', error.message);
-                errorMessage = error.message;
+                errorMessage = 'An error occurred in the request.';
             }
             res.status(errorStatus).send(errorMessage);
         });
