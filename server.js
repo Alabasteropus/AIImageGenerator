@@ -24,6 +24,7 @@ const upload = multer({ storage: storage });
 // Function to log errors with a timestamp
 function logError(error) {
     const timestamp = new Date().toISOString();
+    // Use console.error to log the error with a timestamp, which is compatible with Google Cloud Logging
     console.error(`${timestamp} - ${error}`);
 }
 
