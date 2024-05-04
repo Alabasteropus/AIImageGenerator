@@ -21,14 +21,10 @@ app.use(cors());
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-// Create a writable stream for logging
-const logStream = fs.createWriteStream(path.join(__dirname, 'error.log'), { flags: 'a' });
-
 // Function to log errors with a timestamp
 function logError(error) {
     const timestamp = new Date().toISOString();
-    const logEntry = `${timestamp} - ${error}\n`;
-    logStream.write(logEntry);
+    console.error(`${timestamp} - ${error}`);
 }
 
 // Endpoint for text-to-image generation
