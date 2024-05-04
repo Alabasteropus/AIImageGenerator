@@ -55,3 +55,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
     window.generateTextToImage = generateTextToImage;
     window.generateImageToImage = generateImageToImage;
 });
+
+// Debugging: Log the base64 image data to ensure it's correct
+function logBase64Image(imageElementId) {
+    const imageElement = document.getElementById(imageElementId);
+    if (imageElement) {
+        console.log(`Image Data for ${imageElementId}:`, imageElement.src);
+    } else {
+        console.error(`Image element with ID ${imageElementId} not found`);
+    }
+}
+
+// Attach the debugging function to the window object
+document.addEventListener('DOMContentLoaded', (event) => {
+    window.logBase64Image = logBase64Image;
+});
