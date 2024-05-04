@@ -21,7 +21,7 @@ function generateImageToImage() {
 
             // Make the API request to the backend
             // Update the URL to the production backend service
-            axios.post('https://alabasteropus.github.io/AIImageGenerator/generateImageToImage', formData)
+            axios.post('https://decoded-pilot-421603.uc.r.appspot.com/generateImageToImage', formData)
                 .then(response => {
                     console.log('API response:', response); // Updated for debugging
                     // Check if response.data contains the property 'image'
