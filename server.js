@@ -173,6 +173,11 @@ app.post('/testGenerateImageToImage', (req, res) => {
         });
 });
 
+// Root path handler to confirm server is running
+app.get('/', (req, res) => {
+    res.status(200).send('AI Image Generator backend server is running.');
+});
+
 // Start the server
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
