@@ -3,8 +3,6 @@ const axios = require('axios');
 const cors = require('cors');
 const FormData = require('form-data');
 const multer = require('multer');
-const fs = require('fs');
-const path = require('path');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -21,19 +19,12 @@ app.use(cors());
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-// Function to log errors with a timestamp
-function logError(error) {
-    const timestamp = new Date().toISOString();
-    // Use console.error to log the error with a timestamp, which is compatible with Google Cloud Logging
-    console.error(`${timestamp} - ${error}`);
-}
-
 // Endpoint for text-to-image generation
 app.post('/generateTextToImage', (req, res) => {
     const { prompt } = req.body;
     // Ensure the prompt is a string
     if (typeof prompt !== 'string') {
-        logError('Error: Prompt must be a string.');
+        console.error(`${new Date().toISOString()} - Error: Prompt must be a string.`);
         return res.status(400).send('Prompt must be a string.');
     }
 
@@ -58,7 +49,7 @@ app.post('/generateTextToImage', (req, res) => {
 
             if (error.response) {
                 // Log the error status for internal tracking
-                logError('Error status:' + error.response.status);
+                console.error(`${new Date().toISOString()} - Error status: ${error.response.status}`);
                 errorMessage = 'An error occurred while generating the image.';
                 errorStatus = error.response.status;
             } else if (error.request) {
@@ -75,7 +66,7 @@ app.post('/generateImageToImage', upload.single('image'), (req, res) => {
     const { prompt } = req.body;
     // Ensure the prompt is a string
     if (typeof prompt !== 'string') {
-        logError('Error: Prompt must be a string.');
+        console.error(`${new Date().toISOString()} - Error: Prompt must be a string.`);
         return res.status(400).send('Prompt must be a string.');
     }
 
@@ -83,7 +74,7 @@ app.post('/generateImageToImage', upload.single('image'), (req, res) => {
     if (req.file) {
         // Ensure the file buffer is correctly received
         if (!(req.file.buffer instanceof Buffer)) {
-            logError('Error: Uploaded file is not a buffer.');
+            console.error(`${new Date().toISOString()} - Error: Uploaded file is not a buffer.`);
             return res.status(400).send('Uploaded file is not a buffer.');
         }
         formData.append('image', req.file.buffer, {
@@ -91,7 +82,7 @@ app.post('/generateImageToImage', upload.single('image'), (req, res) => {
             contentType: req.file.mimetype
         });
     } else {
-        logError('Error: No file uploaded.');
+        console.error(`${new Date().toISOString()} - Error: No file uploaded.`);
         return res.status(400).send('No file uploaded.');
     }
     formData.append('prompt', prompt);
@@ -114,7 +105,7 @@ app.post('/generateImageToImage', upload.single('image'), (req, res) => {
 
             if (error.response) {
                 // Log the error status for internal tracking
-                logError('Error status:' + error.response.status);
+                console.error(`${new Date().toISOString()} - Error status: ${error.response.status}`);
                 errorMessage = 'An error occurred while transforming the image.';
                 errorStatus = error.response.status;
             } else if (error.request) {
@@ -134,7 +125,7 @@ app.post('/testGenerateImageToImage', (req, res) => {
 
     // Ensure the prompt is a string
     if (typeof prompt !== 'string') {
-        logError('Error: Prompt must be a string.');
+        console.error(`${new Date().toISOString()} - Error: Prompt must be a string.`);
         return res.status(400).send('Prompt must be a string.');
     }
 
@@ -161,21 +152,21 @@ app.post('/testGenerateImageToImage', (req, res) => {
             res.send(response.data);
         })
         .catch(error => {
-            logError('Error in test image-to-image generation:' + error.message);
+            console.error(`${new Date().toISOString()} - Error in test image-to-image generation: ${error.message}`);
             let errorMessage = 'An unexpected error occurred.';
             let errorStatus = 500;
 
             if (error.response) {
-                logError('Error data:' + error.response.data);
-                logError('Error status:' + error.response.status);
-                logError('Error headers:' + error.response.headers);
+                console.error(`${new Date().toISOString()} - Error data: ${error.response.data}`);
+                console.error(`${new Date().toISOString()} - Error status: ${error.response.status}`);
+                console.error(`${new Date().toISOString()} - Error headers: ${error.response.headers}`);
                 errorMessage = error.response.data.message || 'An error occurred during the test image transformation.';
                 errorStatus = error.response.status;
             } else if (error.request) {
-                logError('Error request:' + error.request);
+                console.error(`${new Date().toISOString()} - Error request: ${error.request}`);
                 errorMessage = 'No response received from the test image transformation service.';
             } else {
-                logError('Error message:' + error.message);
+                console.error(`${new Date().toISOString()} - Error message: ${error.message}`);
                 errorMessage = error.message;
             }
             res.status(errorStatus).send(errorMessage);
@@ -191,5 +182,5 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
     // Test log entry to confirm logging mechanism
-    logError('Test log entry - logging mechanism operational');
+    console.error(`${new Date().toISOString()} - Test log entry - logging mechanism operational`);
 });
