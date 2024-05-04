@@ -1,5 +1,24 @@
 // script.js
 
+// Function to handle text-to-image generation
+function generateTextToImage() {
+    const prompt = document.getElementById('textToImagePrompt').value;
+    axios.post('https://decoded-pilot-421603.uc.r.appspot.com/generateTextToImage', {
+        prompt: prompt
+    }).then(response => {
+        if (response.data && response.data.image) {
+            const imageSrc = `data:image/jpeg;base64,${response.data.image}`;
+            document.getElementById('textToImageResult').src = imageSrc;
+            document.getElementById('textToImageResult').hidden = false;
+        } else {
+            console.error('Unexpected API response format:', response);
+        }
+    }).catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while generating the image.');
+    });
+}
+
 // Function to handle image-to-image generation with actual file upload
 function generateImageToImage() {
     const file = document.getElementById('imageToImageFile').files[0];
