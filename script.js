@@ -1,43 +1,34 @@
 // script.js
 
-// Function to simulate image-to-image generation without an actual file upload
+// Function to handle image-to-image generation with actual file upload
 function generateImageToImage() {
+    const file = document.getElementById('imageToImageFile').files[0];
     const prompt = document.getElementById('imageToImagePrompt').value;
     const formData = new FormData();
+    formData.append('image', file);
+    formData.append('prompt', prompt);
 
-    // Simulated image data as a Base64 string
-    const base64Image = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...'; // Truncated for brevity
-
-    // Convert Base64 string to a Blob
-    const imageBlob = fetch(base64Image)
-        .then(res => res.blob())
-        .then(blob => {
-            // Append the Blob to formData with a filename and content type
-            formData.append('image', blob, {
-                filename: 'test_image.jpg',
-                contentType: 'image/jpeg'
-            });
-            formData.append('prompt', prompt);
-
-            // Make the API request to the backend
-            // Update the URL to the production backend service
-            axios.post('https://decoded-pilot-421603.uc.r.appspot.com/generateImageToImage', formData)
-                .then(response => {
-                    console.log('API response:', response); // Updated for debugging
-                    // Check if response.data contains the property 'image'
-                    if (response.data && response.data.image) {
-                        const imageSrc = `data:image/jpeg;base64,${response.data.image}`;
-                        document.getElementById('imageToImageResult').src = imageSrc;
-                        document.getElementById('imageToImageResult').hidden = false;
-                    } else {
-                        // If response.data does not contain 'image', log the entire response
-                        console.error('Unexpected API response format:', response);
-                    }
-                }).catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred while transforming the image.');
-                });
-        });
+    // Make the API request to the backend
+    // Update the URL to the production backend service
+    axios.post('https://decoded-pilot-421603.uc.r.appspot.com/generateImageToImage', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    }).then(response => {
+        console.log('API response:', response); // Updated for debugging
+        // Check if response.data contains the property 'image'
+        if (response.data && response.data.image) {
+            const imageSrc = `data:image/jpeg;base64,${response.data.image}`;
+            document.getElementById('imageToImageResult').src = imageSrc;
+            document.getElementById('imageToImageResult').hidden = false;
+        } else {
+            // If response.data does not contain 'image', log the entire response
+            console.error('Unexpected API response format:', response);
+        }
+    }).catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while transforming the image.');
+    });
 }
 
 // Ensure the functions are attached to the window object after the DOM is fully loaded
