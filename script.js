@@ -14,7 +14,7 @@ function generateTextToImage() {
             console.error('Unexpected API response format:', response);
         }
     }).catch(error => {
-        console.error('Error:', error.response ? error.response : error);
+        console.error('Error:', error.response ? error.response.data : error.message);
         alert('An error occurred while generating the image. Please check the console for more details.');
     });
 }
@@ -45,7 +45,7 @@ function generateImageToImage() {
             console.error('Unexpected API response format:', response);
         }
     }).catch(error => {
-        console.error('Error:', error.response ? error.response : error);
+        console.error('Error:', error.response ? error.response.data : error.message);
         alert('An error occurred while transforming the image. Please check the console for more details.');
     });
 }
