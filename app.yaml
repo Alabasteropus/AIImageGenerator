@@ -1,0 +1,4 @@
+runtime: nodejs14
+
+env_variables:
+  STABILITY_AI_API_KEY: 'sk-3cZP3kYRK6XWLxMO81GN5BfDJzV48dIOR1i7QV6GHJ9iXrHu'
