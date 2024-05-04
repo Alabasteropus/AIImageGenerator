@@ -20,7 +20,8 @@ function generateImageToImage() {
             formData.append('prompt', prompt);
 
             // Make the API request to the backend
-            axios.post('http://localhost:3000/generateImageToImage', formData)
+            // Update the URL to the production backend service
+            axios.post('https://alabasteropus.github.io/AIImageGenerator/generateImageToImage', formData)
                 .then(response => {
                     console.log('API response:', response); // Updated for debugging
                     // Check if response.data contains the property 'image'
