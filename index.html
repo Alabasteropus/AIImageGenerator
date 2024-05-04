@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Image Generator</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Axios CDN for HTTP requests -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <h1>AI Image Generator</h1>
+    <div>
+        <h2>Text to Image</h2>
+        <input type="text" id="textToImagePrompt" placeholder="Enter prompt">
+        <button onclick="generateTextToImage()">Generate Image</button>
+        <img id="textToImageResult" src="" alt="Generated Image" hidden>
+    </div>
+    <div>
+        <h2>Image to Image</h2>
+        <input type="file" id="imageToImageFile" accept="image/*">
+        <input type="text" id="imageToImagePrompt" placeholder="Enter prompt">
+        <button onclick="generateImageToImage()">Transform Image</button>
+        <img id="imageToImageResult" src="" alt="Transformed Image" hidden>
+    </div>
+    <script type="module" src="script.js"></script>
+    <script>
+        // Define the functions directly in the global scope
+        function generateTextToImage() {
+            const prompt = document.getElementById('textToImagePrompt').value;
+            axios.post('https://api.stability.ai/v2beta/stable-image/generate/core', {
+                prompt: prompt
+            }).then(response => {
+                document.getElementById('textToImageResult').src = URL.createObjectURL(new Blob([response.data]));
+                document.getElementById('textToImageResult').hidden = false;
+            }).catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while generating the image.');
+            });
+        }
+
+        function generateImageToImage() {
+            const file = document.getElementById('imageToImageFile').files[0];
+            const prompt = document.getElementById('imageToImagePrompt').value;
+            const formData = new FormData();
+            formData.append('image', file);
+            formData.append('prompt', prompt);
+
+            axios.post('https://api.stability.ai/v2beta/stable-image/generate/core', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then(response => {
+                document.getElementById('imageToImageResult').src = URL.createObjectURL(new Blob([response.data]));
+                document.getElementById('imageToImageResult').hidden = false;
+            }).catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while transforming the image.');
+            });
+        }
+    </script>
+</body>
+</html>
