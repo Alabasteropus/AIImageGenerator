@@ -2,10 +2,13 @@
 
 // Function to handle text-to-image generation
 function generateTextToImage() {
+    console.log('generateTextToImage function called'); // Added for debugging
     const prompt = document.getElementById('textToImagePrompt').value;
+    console.log('Sending text-to-image request with prompt:', prompt); // Added for debugging
     axios.post('https://decoded-pilot-421603.uc.r.appspot.com/generateTextToImage', {
         prompt: prompt
     }).then(response => {
+        console.log('Text-to-image response received:', response); // Added for debugging
         if (response.data && response.data.image) {
             const imageSrc = `data:image/jpeg;base64,${response.data.image}`;
             document.getElementById('textToImageResult').src = imageSrc;
@@ -22,8 +25,10 @@ function generateTextToImage() {
 
 // Function to handle image-to-image generation with actual file upload
 function generateImageToImage() {
+    console.log('generateImageToImage function called'); // Added for debugging
     const file = document.getElementById('imageToImageFile').files[0];
     const prompt = document.getElementById('imageToImagePrompt').value;
+    console.log('Sending image-to-image request with file and prompt:', file, prompt); // Added for debugging
     const formData = new FormData();
     formData.append('image', file);
     formData.append('prompt', prompt);
@@ -35,7 +40,7 @@ function generateImageToImage() {
             'Content-Type': 'multipart/form-data'
         }
     }).then(response => {
-        console.log('API response:', response); // Updated for debugging
+        console.log('Image-to-image response received:', response); // Added for debugging
         // Check if response.data contains the property 'image'
         if (response.data && response.data.image) {
             const imageSrc = `data:image/jpeg;base64,${response.data.image}`;
