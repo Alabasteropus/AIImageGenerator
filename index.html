@@ -23,6 +23,23 @@
         <button onclick="generateImageToImage()">Transform Image</button>
         <img id="imageToImageResult" src="" alt="Transformed Image" hidden>
     </div>
+    <!-- Carousel Container -->
+    <div id="imageCarousel" class="carousel">
+        <button class="carousel-button prev" onclick="moveCarousel(-1)">&#10094;</button>
+        <div class="carousel-images">
+            <!-- Images will be dynamically added here -->
+        </div>
+        <button class="carousel-button next" onclick="moveCarousel(1)">&#10095;</button>
+    </div>
+    <!-- Feedback Form -->
+    <div>
+        <h2>Feedback</h2>
+        <form id="feedbackForm">
+            <label for="feedbackInput">Your feedback on the carousel feature:</label>
+            <textarea id="feedbackInput" placeholder="Enter your feedback here" required></textarea>
+            <button type="submit">Submit Feedback</button>
+        </form>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>

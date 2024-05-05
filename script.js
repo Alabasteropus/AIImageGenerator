@@ -13,6 +13,7 @@ function generateTextToImage() {
             const imageSrc = `data:image/jpeg;base64,${response.data.image}`;
             document.getElementById('textToImageResult').src = imageSrc;
             document.getElementById('textToImageResult').hidden = false;
+            addToCarousel(imageSrc); // Add image to carousel
         } else {
             console.error('Unexpected API response format:', response);
         }
@@ -47,6 +48,7 @@ function generateImageToImage() {
             const imageSrc = `data:image/jpeg;base64,${response.data.image}`;
             document.getElementById('imageToImageResult').src = imageSrc;
             document.getElementById('imageToImageResult').hidden = false;
+            addToCarousel(imageSrc); // Add image to carousel
         } else {
             // If response.data does not contain 'image', log the entire response
             console.error('Unexpected API response format:', response);
@@ -59,10 +61,35 @@ function generateImageToImage() {
     });
 }
 
+// Function to add images to the carousel
+function addToCarousel(imageSrc) {
+    const carousel = document.querySelector('.carousel-images');
+    const img = document.createElement('img');
+    img.src = imageSrc;
+    carousel.appendChild(img);
+}
+
+// Function to handle feedback form submission
+function handleFeedbackFormSubmission(event) {
+    event.preventDefault(); // Prevent the default form submission
+    const feedback = document.getElementById('feedbackInput').value;
+    axios.post('https://decoded-pilot-421603.uc.r.appspot.com/submitFeedback', { feedback: feedback })
+    .then(response => {
+        alert('Thank you for your feedback!');
+    })
+    .catch(error => {
+        console.error('Error submitting feedback:', error);
+        alert('An error occurred while submitting your feedback. Please try again later.');
+    });
+}
+
 // Ensure the functions are attached to the window object after the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', (event) => {
     window.generateTextToImage = generateTextToImage;
     window.generateImageToImage = generateImageToImage;
+    window.addToCarousel = addToCarousel;
+    // Attach event listener to feedback form
+    document.getElementById('feedbackForm').addEventListener('submit', handleFeedbackFormSubmission);
 });
 
 // Debugging: Log the base64 image data to ensure it's correct

@@ -14,7 +14,8 @@ h2 {
 }
 
 input[type="text"],
-input[type="file"] {
+input[type="file"],
+textarea {
     display: block;
     margin: 10px 0;
     padding: 10px;
@@ -42,4 +43,55 @@ img {
     height: auto;
     display: block;
     margin-top: 20px;
+}
+
+/* Carousel styles */
+.carousel {
+    width: 100%;
+    position: relative;
+    margin-top: 20px;
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0,0,0,0.5);
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 100;
+}
+
+.carousel-button.prev {
+    left: 0;
+}
+
+.carousel-button.next {
+    right: 0;
+}
+
+.carousel-images {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+}
+
+.carousel-images img {
+    max-width: none;
+    width: auto;
+    height: 200px; /* Fixed height for carousel images */
+    margin-right: 10px;
+}
+
+/* Feedback Form styles */
+#feedbackForm {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#feedbackInput {
+    min-height: 100px; /* Minimum height for the textarea */
+    resize: vertical; /* Allow only vertical resizing */
 }

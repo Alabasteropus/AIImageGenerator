@@ -1,3 +1,4 @@
+const fs = require('fs');
 const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
@@ -171,6 +172,21 @@ app.post('/testGenerateImageToImage', (req, res) => {
             }
             res.status(errorStatus).send(errorMessage);
         });
+});
+
+// Endpoint to handle feedback form submissions
+app.post('/submitFeedback', (req, res) => {
+    const feedback = req.body.feedback;
+    const timestamp = new Date().toISOString();
+    const feedbackEntry = `${timestamp}: ${feedback}\n`;
+
+    fs.appendFile('feedback.txt', feedbackEntry, (err) => {
+        if (err) {
+            console.error(`${timestamp} - Error writing feedback: ${err.message}`);
+            return res.status(500).send('Error writing feedback.');
+        }
+        res.status(200).send('Feedback submitted successfully.');
+    });
 });
 
 // Root path handler to confirm server is running
