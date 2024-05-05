@@ -81,4 +81,4 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 
 // Trivial change to trigger redeployment
-console.log('Triggering redeployment');
+console.log('Triggering redeployment - updated to ensure redeployment');
