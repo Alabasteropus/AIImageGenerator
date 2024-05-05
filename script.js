@@ -82,3 +82,5 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 // Trivial change to trigger redeployment
 console.log('Triggering redeployment - updated to ensure redeployment');
+// Additional comment to trigger redeployment
+console.log('Additional trivial change to trigger GitHub Pages redeployment');
