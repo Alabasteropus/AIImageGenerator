@@ -79,3 +79,6 @@ function logBase64Image(imageElementId) {
 document.addEventListener('DOMContentLoaded', (event) => {
     window.logBase64Image = logBase64Image;
 });
+
+// Trivial change to trigger redeployment
+console.log('Triggering redeployment');
