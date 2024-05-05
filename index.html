@@ -23,41 +23,6 @@
         <button onclick="generateImageToImage()">Transform Image</button>
         <img id="imageToImageResult" src="" alt="Transformed Image" hidden>
     </div>
-    <script type="module" src="script.js"></script>
-    <script>
-        // Define the functions directly in the global scope
-        function generateTextToImage() {
-            const prompt = document.getElementById('textToImagePrompt').value;
-            axios.post('https://api.stability.ai/v2beta/stable-image/generate/core', {
-                prompt: prompt
-            }).then(response => {
-                document.getElementById('textToImageResult').src = URL.createObjectURL(new Blob([response.data]));
-                document.getElementById('textToImageResult').hidden = false;
-            }).catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred while generating the image.');
-            });
-        }
-
-        function generateImageToImage() {
-            const file = document.getElementById('imageToImageFile').files[0];
-            const prompt = document.getElementById('imageToImagePrompt').value;
-            const formData = new FormData();
-            formData.append('image', file);
-            formData.append('prompt', prompt);
-
-            axios.post('https://api.stability.ai/v2beta/stable-image/generate/core', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            }).then(response => {
-                document.getElementById('imageToImageResult').src = URL.createObjectURL(new Blob([response.data]));
-                document.getElementById('imageToImageResult').hidden = false;
-            }).catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred while transforming the image.');
-            });
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
