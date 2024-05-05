@@ -73,8 +73,14 @@ function addToCarousel(imageSrc) {
 function handleFeedbackFormSubmission(event) {
     event.preventDefault(); // Prevent the default form submission
     const feedback = document.getElementById('feedbackInput').value;
-    console.log('Feedback received:', feedback); // Log the feedback to the console
-    // TODO: Implement backend endpoint or email sending functionality
+    axios.post('https://decoded-pilot-421603.uc.r.appspot.com/submitFeedback', { feedback: feedback })
+    .then(response => {
+        alert('Thank you for your feedback!');
+    })
+    .catch(error => {
+        console.error('Error submitting feedback:', error);
+        alert('An error occurred while submitting your feedback. Please try again later.');
+    });
 }
 
 // Ensure the functions are attached to the window object after the DOM is fully loaded
