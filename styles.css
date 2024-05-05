@@ -14,7 +14,8 @@ h2 {
 }
 
 input[type="text"],
-input[type="file"] {
+input[type="file"],
+textarea {
     display: block;
     margin: 10px 0;
     padding: 10px;
@@ -82,4 +83,15 @@ img {
     width: auto;
     height: 200px; /* Fixed height for carousel images */
     margin-right: 10px;
+}
+
+/* Feedback Form styles */
+#feedbackForm {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#feedbackInput {
+    min-height: 100px; /* Minimum height for the textarea */
+    resize: vertical; /* Allow only vertical resizing */
 }

@@ -69,11 +69,21 @@ function addToCarousel(imageSrc) {
     carousel.appendChild(img);
 }
 
+// Function to handle feedback form submission
+function handleFeedbackFormSubmission(event) {
+    event.preventDefault(); // Prevent the default form submission
+    const feedback = document.getElementById('feedbackInput').value;
+    console.log('Feedback received:', feedback); // Log the feedback to the console
+    // TODO: Implement backend endpoint or email sending functionality
+}
+
 // Ensure the functions are attached to the window object after the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', (event) => {
     window.generateTextToImage = generateTextToImage;
     window.generateImageToImage = generateImageToImage;
     window.addToCarousel = addToCarousel;
+    // Attach event listener to feedback form
+    document.getElementById('feedbackForm').addEventListener('submit', handleFeedbackFormSubmission);
 });
 
 // Debugging: Log the base64 image data to ensure it's correct
