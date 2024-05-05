@@ -19,6 +19,7 @@ function generateTextToImage() {
     }).catch(error => {
         console.error('Error in generateTextToImage:', error);
         console.error('Error details:', error.response ? error.response : error);
+        console.error('Error stack:', error.stack ? error.stack : 'No stack trace available'); // Added for debugging
         alert('An error occurred while generating the image. Please check the console for more details.');
     });
 }
@@ -53,6 +54,7 @@ function generateImageToImage() {
     }).catch(error => {
         console.error('Error in generateImageToImage:', error);
         console.error('Error details:', error.response ? error.response : error);
+        console.error('Error stack:', error.stack ? error.stack : 'No stack trace available'); // Added for debugging
         alert('An error occurred while transforming the image. Please check the console for more details.');
     });
 }
